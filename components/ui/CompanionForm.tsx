@@ -41,6 +41,8 @@ const subjects = [
   { label: "Science", value: "science" },
   { label: "History", value: "history" },
   { label: "English", value: "english" },
+  { label: "Coding", value: "coding" },
+  { label: "Economics", value: "economics" },
 ];
 
 type FormData = z.infer<typeof formSchema>;

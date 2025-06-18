@@ -11,6 +11,7 @@ const navItems = [
     { label: 'My Journey', href: '/my-journey' },
 ]
 
+
 const NavItems = () => {
   const pathname = usePathname();
   return (

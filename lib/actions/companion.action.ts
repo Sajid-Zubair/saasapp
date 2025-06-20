@@ -86,7 +86,7 @@ export const getRecentSession = async (limit = 10): Promise<Companion[]> => {
 
     return data.map(({companions}) => companions)
 }
-export const getUserSession = async (userId: string,limit = 10) => {
+export const getUserSession = async (userId: string,limit = 10):Promise<Companion[]> => {
     const supabase = createSupabaseClient();
 
     const { data, error } = await supabase.from('session_history')
@@ -98,4 +98,16 @@ export const getUserSession = async (userId: string,limit = 10) => {
     if(error) throw new Error(error.message || "Failed to fetch recent session")
 
     return data.map(({companions}) => companions)
+}
+
+export const getUserCompanions = async (userId: string) => {
+    const supabase = createSupabaseClient();
+
+    const { data, error } = await supabase.from('companions')
+    .select()
+    .eq('author', userId)
+
+    if(error) throw new Error(error.message || "Failed to fetch recent session")
+
+    return data
 }

@@ -5,7 +5,7 @@ import { createSupabaseClient } from "../supabase";
 
 export const createCompanion = async (formData : CreateCompanion) => {
     const { userId : author } = await auth();
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
 
     const { data, error } = await supabase
     .from('companions')
@@ -19,7 +19,7 @@ export const createCompanion = async (formData : CreateCompanion) => {
 
 
 export const getAllCompanions = async ({limit = 10, page = 1, subject, topic}: GetAllCompanions) => {
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
 
     let query = supabase.from('companions').select()
 
@@ -47,7 +47,7 @@ export const getAllCompanions = async ({limit = 10, page = 1, subject, topic}: G
 
 
 export const getCompanion = async (id: string) => {
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
 
     const {data,error} = await supabase
                         .from('companions')
@@ -62,7 +62,7 @@ export const getCompanion = async (id: string) => {
 
 export const addToSessionHistory = async (companionId: string) => {
     const { userId } = await auth();
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
 
     const { data, error } = await supabase.from('session_history').insert({
         companion_id: companionId,
@@ -75,7 +75,7 @@ export const addToSessionHistory = async (companionId: string) => {
 }
 
 export const getRecentSession = async (limit = 10): Promise<Companion[]> => {
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
 
     const { data, error } = await supabase.from('session_history')
     .select(`companions:companion_id(*)`)
@@ -87,7 +87,7 @@ export const getRecentSession = async (limit = 10): Promise<Companion[]> => {
     return data.map(({companions}) => companions)
 }
 export const getUserSession = async (userId: string,limit = 10):Promise<Companion[]> => {
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
 
     const { data, error } = await supabase.from('session_history')
     .select(`companions:companion_id(*)`)
@@ -101,7 +101,7 @@ export const getUserSession = async (userId: string,limit = 10):Promise<Companio
 }
 
 export const getUserCompanions = async (userId: string) => {
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
 
     const { data, error } = await supabase.from('companions')
     .select()
@@ -116,7 +116,7 @@ export const getUserCompanions = async (userId: string) => {
 export const newCompanionPermissions = async () => {
     const { userId, has} = await auth();
 
-    const supabase = createSupabaseClient();
+    const supabase = await createSupabaseClient();
 
     let limit = 0;
 
